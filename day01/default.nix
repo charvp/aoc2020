@@ -1,4 +1,3 @@
-writeFile:
 with builtins;
 let
   input = readFile ./input;
@@ -26,6 +25,7 @@ let
   elem = head (filter (x: x.sum == 2020) (pairs numbers));
   elem2 = head (filter (x: x.sum == 2020) (triples numbers));
 in
+writeFile:
 {
   day01-1 = writeFile "day01-1" (toString elem.product);
   day01-2 = writeFile "day01-2" (toString elem2.product);
