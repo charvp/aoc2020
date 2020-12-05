@@ -9,6 +9,12 @@
       let
         pkgs = import nixpkgs { inherit system; };
       in
-      { packages = builtins.foldl' (a: b: a // b) { } (map (day: import day pkgs.writeText) [ ./day01 ./day02 ]); }
+      {
+        packages = builtins.foldl' (a: b: a // b) { } (map (day: import day pkgs.writeText) [
+          ./day01
+          ./day02
+          ./day03
+        ]);
+      }
     );
 }
