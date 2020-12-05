@@ -24,8 +24,7 @@ let
       first = elemAt (stringToChars elem.password) (elem.min - 1);
       second = elemAt (stringToChars elem.password) (elem.max - 1);
     in
-    (first == elem.char || second == elem.char) &&
-    (first != elem.char || second != elem.char);
+    (first == elem.char) != (second == elem.char);
   validPart2 = filter isPart2Valid parsed;
 in
 writeFile:
