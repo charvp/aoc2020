@@ -24,8 +24,7 @@ let
   slopes = [ [ 1 1 ] [ 3 1 ] [ 5 1 ] [ 7 1 ] [ 1 2 ] ];
   counts = map (s: goDown (elemAt s 0) (elemAt s 1) 0 splitLines) slopes;
 in
-writeFile:
 {
-  day03-1 = writeFile "day03-1" (toString (goDown 3 1 0 splitLines));
-  day03-2 = writeFile "day03-2" (toString (foldl' mul 1 counts));
+  day03-1 = goDown 3 1 0 splitLines;
+  day03-2 = foldl' mul 1 counts;
 }

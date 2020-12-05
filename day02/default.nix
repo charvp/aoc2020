@@ -27,8 +27,7 @@ let
     (first == elem.char) != (second == elem.char);
   validPart2 = filter isPart2Valid parsed;
 in
-writeFile:
 {
-  day02-1 = writeFile "day02-1" (toString (length validPart1));
-  day02-2 = writeFile "day02-2" (toString (length validPart2));
+  day02-1 = length validPart1;
+  day02-2 = length validPart2;
 }

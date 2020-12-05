@@ -17,8 +17,7 @@ let
       skipped (tail l) else
       (elemAt l 0) - 1;
 in
-writeFile:
 {
-  day05-1 = writeFile "day05-1" (toString (head sorted));
-  day05-2 = writeFile "day05-2" (toString (skipped sorted));
+  day05-1 = head sorted;
+  day05-2 = skipped sorted;
 }

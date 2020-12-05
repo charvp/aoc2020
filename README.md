@@ -1,11 +1,9 @@
 To get the result for a specific (part of a) day:
 
 ```
-> nix-build -A packages.x86_64-linux.day$day-$part default.nix
+$ nix-instantiate --eval -A day$day-$part
 ```
 Or, on a system with flakes:
 ```
-> nix build .#day$day-$part
+$ nix eval .#day$day-$part
 ```
-
-`cat result` to actually see the result.
