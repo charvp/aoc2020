@@ -1,9 +1,6 @@
-with builtins;
+with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
-  splitLines = filter (x: x != "") (filter isString (split "\n" input));
-  stringToChars = s: map (x: elemAt x 0) (filter isList (split "(.)" s));
-  pow = n: x: if n == 0 then 1 else x * (pow (n - 1) x);
   bin2dec = l:
     let
       cur = head l;
@@ -11,9 +8,9 @@ let
       rest = bin2dec (tail l);
     in
     if l == [ ] then 0 else num + rest;
-  sorted = sort (x: y: x > y) (map bin2dec (map stringToChars splitLines));
+  sorted = sort (x: y: x > y) (map bin2dec (map stringToList (splitNonEmptyLines input)));
   skipped = l:
-    if elemAt l 0 == (elemAt l 1) + 1 then
+    if head l == (elemAt l 1) + 1 then
       skipped (tail l) else
       (elemAt l 0) - 1;
 in

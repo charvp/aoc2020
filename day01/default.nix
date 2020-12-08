@@ -1,8 +1,7 @@
-with builtins;
+with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
-  splitLines = filter isString (split "\n" input);
-  numbers = map fromJSON (filter (x: x != "") splitLines);
+  numbers = map parseInt (splitNonEmptyLines input);
   pairs = list:
     if (length list > 0) then
       let
@@ -22,10 +21,10 @@ let
       (map ({ sum, product }: { sum = sum + z; product = product * z; }) ps) ++ (triples t)
     else
       [ ];
-  elem = head (filter (x: x.sum == 2020) (pairs numbers));
-  elem2 = head (filter (x: x.sum == 2020) (triples numbers));
+  p2020 = head (filter (x: x.sum == 2020) (pairs numbers));
+  t2020 = head (filter (x: x.sum == 2020) (triples numbers));
 in
 {
-  day01-1 = elem.product;
-  day01-2 = elem2.product;
+  day01-1 = p2020.product;
+  day01-2 = t2020.product;
 }

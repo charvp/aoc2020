@@ -1,13 +1,11 @@
-with builtins;
+with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
-  splitLines = filter (x: x != "") (filter isString (split "\n" input));
-  stringToChars = s: map (x: elemAt x 0) (filter isList (split "(.)" s));
-  apply = c: f: e: if c == 0 then e else f (apply (c - 1) f e);
+  splitLines = splitNonEmptyLines input;
   goDown = right: down: pos: remainder:
     let
       cur = head remainder;
-      l = stringToChars cur;
+      l = stringToList cur;
       char = elemAt l pos;
       extra = if char == "#" then 1 else 0;
       newPos =

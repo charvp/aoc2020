@@ -1,11 +1,9 @@
-with builtins;
+with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
-  splits = filter (x: x != "") (filter isString (split "\n\n" input));
-  parseAnswers = i: listToAttrs (map (l: { value = 1; name = (elemAt l 0); }) (filter isList (split "(.)" i)));
-  individuals = g: filter (x: x != "") (filter isString (split "\n" g));
-  groups = map (g: map parseAnswers (individuals g)) splits;
-  numQuestionsUnique = map (g: length (attrNames (foldl' (x: y: x // y) { } g))) groups;
+  parseAnswers = i: listToAttrs (map (c: { value = 1; name = c; }) (stringToList i));
+  groups = map (g: map parseAnswers (splitNonEmptyLines g)) (splitNonEmptyBlocks input);
+  numQuestionsUnique = map (g: length (attrNames (union g))) groups;
   numQuestionsAll = map (g: length (attrNames (foldl' intersectAttrs (head g) (tail g)))) groups;
 in
 {

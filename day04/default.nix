@@ -1,17 +1,12 @@
-with builtins;
+with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
-  splits = filter (x: x != "") (filter isString (split "\n\n" input));
   parsePassport = s:
     let
       parsed = filter isList (split "([^ \n]*):([^ \n]*)" s);
     in
-    listToAttrs (map (e: { name = (elemAt e 0); value = (elemAt e 1); }) parsed);
-  passports = map parsePassport splits;
-  hasAttrs = attrs: elem:
-    if attrs == [ ] then
-      true else
-      (hasAttr (head attrs) elem) && (hasAttrs (tail attrs) elem);
+    listToAttrs (map (e: { name = (head e); value = (elemAt e 1); }) parsed);
+  passports = map parsePassport (splitNonEmptyBlocks input);
   isPart1Valid = hasAttrs [ "byr" "iyr" "eyr" "hgt" "hcl" "ecl" "pid" ];
   validPart1 = filter isPart1Valid passports;
   isPart2Valid = elem:
