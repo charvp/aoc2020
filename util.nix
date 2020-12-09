@@ -26,9 +26,9 @@ rec {
       (map (x: { sum = x + y; product = x * y; }) t) ++ (pairs t)
     else
       [ ];
-  eachWithIndex = list:
-    genList (i: { inherit i; val = (elemAt list i); }) (length list);
+  eachWithIndex = list: genList (i: { inherit i; val = (elemAt list i); }) (length list);
   sum = list: foldl' add 0 list;
   min = list: foldl' (x: y: if y < x then y else x) (head list) (tail list);
   max = list: foldl' (x: y: if y > x then y else x) (head list) (tail list);
+  leftPad = n: p: s: if builtins.stringLength s < n then p + (leftPad (n - 1) p s) else s;
 }
