@@ -2,15 +2,6 @@ with builtins; with (import ../util.nix);
 let
   input = readFile ./input;
   numbers = map parseInt (splitNonEmptyLines input);
-  pairs = list:
-    if (length list > 0) then
-      let
-        y = head list;
-        t = tail list;
-      in
-      (map (x: { sum = x + y; product = x * y; }) t) ++ (pairs t)
-    else
-      [ ];
   triples = list:
     if (length list > 0) then
       let
