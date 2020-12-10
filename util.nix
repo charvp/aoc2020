@@ -31,4 +31,14 @@ rec {
   min = list: foldl' (x: y: if y < x then y else x) (head list) (tail list);
   max = list: foldl' (x: y: if y > x then y else x) (head list) (tail list);
   leftPad = n: p: s: if builtins.stringLength s < n then p + (leftPad (n - 1) p s) else s;
+  combine = attr1: attr2: f:
+    foldl'
+      (res: name: res // {
+        "${name}" =
+          if hasAttr name res
+          then f res.${name} attr2.${name}
+          else attr2.${name};
+      })
+      attr1
+      (attrNames attr2);
 }
