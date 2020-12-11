@@ -71,8 +71,8 @@ let
           (length row)
       )
       (length grid);
-  endStateP1 = fix (golIter neighbourGrid 4) grid;
-  endStateP2 = fix (golIter visibilityGrid 5) grid;
+  endStateP1 = deepSeq neighbourGrid (fix' (golIter neighbourGrid 4) grid);
+  endStateP2 = deepSeq visibilityGrid (fix' (golIter visibilityGrid 5) grid);
   occupied = state: sum (map (x: length (filter (y: y == "#") x)) state);
 in
 {

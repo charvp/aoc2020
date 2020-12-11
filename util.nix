@@ -43,4 +43,10 @@ rec {
       (attrNames attr2);
   fix = f: e:
     let next = f e; in if e == next then e else fix f next;
+  fix' = f: e:
+    let
+      next = f e;
+      evaluated = deepSeq next next;
+    in
+    if e == evaluated then e else fix' f evaluated;
 }
