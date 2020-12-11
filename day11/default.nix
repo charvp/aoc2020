@@ -3,10 +3,11 @@ let
   input = readFile ./input;
   grid = map stringToList (splitNonEmptyLines input);
   isInBounds = { i, j }: i >= 0 && i < length grid && j >= 0 && j < length (elemAt grid i);
+  isSeat = { i, j }: let elem = elemAt (elemAt grid i) j; in elem == "L";
   neighbourGrid =
     genList
       (i: genList
-        (j: filter isInBounds [
+        (j: filter isSeat (filter isInBounds [
           { i = (i + 1); j = (j + 1); }
           { i = (i + 1); j = (j - 1); }
           { i = (i + 1); j = j; }
@@ -15,7 +16,7 @@ let
           { i = (i - 1); j = j; }
           { i = i; j = (j + 1); }
           { i = i; j = (j - 1); }
-        ])
+        ]))
         (length (elemAt grid i)))
       (length grid);
   visibleFor = grid: i: j: iDiff: jDiff:
