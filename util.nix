@@ -41,4 +41,6 @@ rec {
       })
       attr1
       (attrNames attr2);
+  fix = f: e:
+    let next = f e; in if e == next then e else fix f next;
 }
