@@ -30,7 +30,7 @@ rec {
   sum = list: foldl' add 0 list;
   min = list: foldl' (x: y: if y < x then y else x) (head list) (tail list);
   max = list: foldl' (x: y: if y > x then y else x) (head list) (tail list);
-  leftPad = n: p: s: if builtins.stringLength s < n then p + (leftPad (n - 1) p s) else s;
+  leftPad = n: p: s: if stringLength s < n then p + (leftPad (n - 1) p s) else s;
   combine = attr1: attr2: f:
     foldl'
       (res: name: res // {
@@ -49,4 +49,5 @@ rec {
       evaluated = deepSeq next next;
     in
     if e == evaluated then e else fix' f evaluated;
+  abs = n: if n < 0 then -n else n;
 }
