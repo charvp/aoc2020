@@ -28,7 +28,8 @@ rec {
       [ ];
   eachWithIndex = list: genList (i: { inherit i; val = (elemAt list i); }) (length list);
   sum = list: foldl' add 0 list;
-  min = list: foldl' (x: y: if y < x then y else x) (head list) (tail list);
+  minWith = f: list: foldl' (x: y: if f x y then x else y) (head list) (tail list);
+  min = minWith (x: y: x < y);
   max = list: foldl' (x: y: if y > x then y else x) (head list) (tail list);
   leftPad = n: p: s: if stringLength s < n then p + (leftPad (n - 1) p s) else s;
   combine = attr1: attr2: f:
@@ -50,4 +51,6 @@ rec {
     in
     if e == evaluated then e else fix' f evaluated;
   abs = n: if n < 0 then -n else n;
+  mod = n: x:
+    let quot = (n / x) * x; in n - quot;
 }
