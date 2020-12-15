@@ -53,4 +53,12 @@ rec {
   abs = n: if n < 0 then -n else n;
   mod = n: x:
     let quot = (n / x) * x; in n - quot;
+  parseBin = b:
+    let
+      p' = acc: r:
+        let newAcc = (2 * acc) + (if head r == "1" then 1 else 0);
+        in
+        if r == [ ] then acc else p' newAcc (tail r);
+    in
+    p' 0 (stringToList b);
 }
